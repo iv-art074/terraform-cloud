@@ -8,6 +8,7 @@ resource "yandex_compute_instance_group" "group1" {
         resources {
             memory          = 2
             cores           = 2
+            core_fraction   = 20  # % загрузки процессора
         }
 
         boot_disk {
