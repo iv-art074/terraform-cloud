@@ -1,6 +1,8 @@
 ## Задание 1. Организация шифрования содержимого S3-бакета.  
 Используя конфигурации, выполненные в рамках ДЗ на предыдущем занятии, добавить к созданному ранее bucket S3 возможность шифрования Server-Side, используя общий ключ;  
 Включить шифрование SSE-S3 bucket S3 для шифрования всех вновь добавляемых объектов в данный bucket  
+
+Меняем bucket  
 ```
 iv_art@Pappa-wsl:~/terraform-cloud/15-3$ cat bucket.tf
 // Use sa
@@ -22,7 +24,7 @@ resource "yandex_iam_service_account_static_access_key" "sa-static-key" {
   description        = "static access key for object storage"
 }
 
-// Create KMS key
+// Create KMS key  -----------------------
 
 resource "yandex_kms_symmetric_key" "key-a" {
   name              = "example-symetric-key"
@@ -37,7 +39,7 @@ resource "yandex_storage_bucket" "s3_bucket" {
   access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
   secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
   bucket = "ivart-s3-bucket"
-// server encrytion
+// server encrytion  --------------------------
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
