@@ -67,4 +67,38 @@ resource "yandex_mdb_mysql_user" "db_user" {
   authentication_plugin = "SHA256_PASSWORD"
 }
 ```
+Результат:  
+```
+iv_art@Pappa-wsl:~/terraform-cloud/15-4$ yc managed-mysql cluster list
++----------------------+---------------+---------------------+--------+---------+
+|          ID          |     NAME      |     CREATED AT      | HEALTH | STATUS  |
++----------------------+---------------+---------------------+--------+---------+
+| c9qfp05re2t5qjeqgrh2 | cluster-mysql | 2022-09-07 13:18:37 | ALIVE  | RUNNING |
++----------------------+---------------+---------------------+--------+---------+
+
+iv_art@Pappa-wsl:~/terraform-cloud/15-4$ yc managed-mysql hosts list --cluster-name cluster-mysql
++-------------------------------------------+----------------------+---------+--------+---------------+-----------+--------------------+----------+-----------------+
+|                   NAME                    |      CLUSTER ID      |  ROLE   | HEALTH |    ZONE ID    | PUBLIC IP | REPLICATION SOURCE | PRIORITY | BACKUP PRIORITY |
++-------------------------------------------+----------------------+---------+--------+---------------+-----------+--------------------+----------+-----------------+
+| rc1a-vu07j0hjq6fx7dyv.mdb.yandexcloud.net | c9qfp05re2t5qjeqgrh2 | MASTER  | ALIVE  | ru-central1-a | false     |                    |        0 |               0 |
+| rc1b-g4dlmnxeti922qzr.mdb.yandexcloud.net | c9qfp05re2t5qjeqgrh2 | REPLICA | ALIVE  | ru-central1-b | false     |                    |        0 |               0 |
++-------------------------------------------+----------------------+---------+--------+---------------+-----------+--------------------+----------+-----------------+
+
+iv_art@Pappa-wsl:~/terraform-cloud/15-4$ yc managed-mysql user list --cluster-name cluster-mysql
++---------+-------------+
+|  NAME   | PERMISSIONS |
++---------+-------------+
+| db_user | netology_db |
++---------+-------------+
+
+iv_art@Pappa-wsl:~/terraform-cloud/15-4$ yc managed-mysql database list --cluster-name cluster-mysql
++-------------+----------------------+
+|    NAME     |      CLUSTER ID      |
++-------------+----------------------+
+| netology_db | c9qfp05re2t5qjeqgrh2 |
++-------------+----------------------+
+```
+![image](https://user-images.githubusercontent.com/87374285/188891891-36eca1ff-ebbe-4eee-adef-54a7fb15195d.png)  
+
+
 
